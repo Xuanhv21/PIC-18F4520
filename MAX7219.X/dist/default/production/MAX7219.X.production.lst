@@ -1,0 +1,1525 @@
+
+
+Microchip MPLAB XC8 Assembler V2.32 build 20210201212658 
+                                                                                               Sat Jan 22 11:20:57 2022
+
+Microchip MPLAB XC8 C Compiler v2.32 (Free license) build 20210201212658 Og1 
+     1                           	processor	18F4520
+     2                           	fnconf	rparam,??,?,0
+     3                           	pagewidth 120
+     4                           	opt	flic
+     5                           	psect	cinit,global,reloc=2,class=CODE,delta=1
+     6                           	psect	bssCOMRAM,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     7                           	psect	cstackCOMRAM,global,class=COMRAM,space=1,delta=1,lowdata,noexec
+     8                           	psect	text0,global,reloc=2,class=CODE,delta=1
+     9                           	psect	text1,global,reloc=2,class=CODE,delta=1
+    10                           	psect	text2,global,reloc=2,class=CODE,delta=1
+    11                           	psect	text3,global,reloc=2,class=CODE,delta=1
+    12                           	psect	text4,global,reloc=2,class=CODE,delta=1
+    13                           	psect	text5,global,reloc=2,class=CODE,delta=1
+    14                           	psect	text6,global,reloc=2,class=CODE,delta=1
+    15                           	psect	text7,global,reloc=2,class=CODE,delta=1,group=1
+    16                           	psect	text8,global,reloc=2,class=CODE,delta=1,group=1
+    17                           	psect	text9,global,reloc=2,class=CODE,delta=1
+    18                           	psect	intsave_regs,global,class=BIGRAM,space=1,delta=1,noexec
+    19                           	psect	rparam,global,class=COMRAM,space=1,delta=1,noexec
+    20                           	psect	idloc,global,abs,ovrld,class=IDLOC,space=5,delta=1,noexec
+    21                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=1,noexec
+    22  0000                     
+    23                           ; Version 2.20
+    24                           ; Generated 12/02/2020 GMT
+    25                           ; 
+    26                           ; Copyright © 2020, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    27                           ; All rights reserved.
+    28                           ; 
+    29                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+      +                          ip").
+    30                           ; 
+    31                           ; Redistribution and use in source and binary forms, with or without modification, are
+    32                           ; permitted provided that the following conditions are met:
+    33                           ; 
+    34                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+      +                          t of
+    35                           ;        conditions and the following disclaimer.
+    36                           ; 
+    37                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+      +                          list
+    38                           ;        of conditions and the following disclaimer in the documentation and/or other
+    39                           ;        materials provided with the distribution.
+    40                           ; 
+    41                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+      +                          is
+    42                           ;        software without specific prior written permission.
+    43                           ; 
+    44                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    45                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+      +                          OR
+    46                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+      +                          T,
+    47                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    48                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    49                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+      +                          RICT
+    50                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+      +                          SE OF
+    51                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    52                           ; 
+    53                           ; 
+    54                           ; Code-generator required, PIC18F4520 Definitions
+    55                           ; 
+    56                           ; SFR Addresses
+    57  0000                     _PORTCbits	set	3970
+    58  0000                     _SSPSTATbits	set	4039
+    59  0000                     _SSPBUF	set	4041
+    60  0000                     _SSPCON1	set	4038
+    61  0000                     _SSPSTAT	set	4039
+    62  0000                     _TRISCbits	set	3988
+    63  0000                     _TRISAbits	set	3986
+    64                           
+    65                           ; #config settings
+    66                           
+    67                           	psect	cinit
+    68  007C8E                     __pcinit:
+    69                           	callstack 0
+    70  007C8E                     start_initialization:
+    71                           	callstack 0
+    72  007C8E                     __initialization:
+    73                           	callstack 0
+    74                           
+    75                           ; Clear objects allocated to COMRAM (4 bytes)
+    76  007C8E  6A25               	clrf	(__pbssCOMRAM+3)& (0+255),c
+    77  007C90  6A24               	clrf	(__pbssCOMRAM+2)& (0+255),c
+    78  007C92  6A23               	clrf	(__pbssCOMRAM+1)& (0+255),c
+    79  007C94  6A22               	clrf	__pbssCOMRAM& (0+255),c
+    80  007C96                     end_of_initialization:
+    81                           	callstack 0
+    82  007C96                     __end_of__initialization:
+    83                           	callstack 0
+    84  007C96  0100               	movlb	0
+    85  007C98  EFED  F03E         	goto	_main	;jump to C main() function
+    86                           
+    87                           	psect	bssCOMRAM
+    88  000022                     __pbssCOMRAM:
+    89                           	callstack 0
+    90  000022                     _i:
+    91                           	callstack 0
+    92  000022                     	ds	4
+    93                           
+    94                           	psect	cstackCOMRAM
+    95  000001                     __pcstackCOMRAM:
+    96                           	callstack 0
+    97  000001                     ?___lldiv:
+    98                           	callstack 0
+    99  000001                     ?___llmod:
+   100                           	callstack 0
+   101  000001                     SPI_Write@data:
+   102                           	callstack 0
+   103  000001                     ___lldiv@dividend:
+   104                           	callstack 0
+   105  000001                     ___llmod@dividend:
+   106                           	callstack 0
+   107                           
+   108                           ; 4 bytes @ 0x0
+   109  000001                     	ds	1
+   110  000002                     MAX7219_Write@data1:
+   111                           	callstack 0
+   112  000002                     Max7219UpdateIntensity@OnValue:
+   113                           	callstack 0
+   114                           
+   115                           ; 1 bytes @ 0x1
+   116  000002                     	ds	1
+   117  000003                     MAX7219_Write@reg1:
+   118                           	callstack 0
+   119                           
+   120                           ; 1 bytes @ 0x2
+   121  000003                     	ds	1
+   122  000004                     
+   123                           ; 1 bytes @ 0x3
+   124  000004                     	ds	1
+   125  000005                     ___lldiv@divisor:
+   126                           	callstack 0
+   127  000005                     ___llmod@divisor:
+   128                           	callstack 0
+   129                           
+   130                           ; 4 bytes @ 0x4
+   131  000005                     	ds	4
+   132  000009                     ___llmod@counter:
+   133                           	callstack 0
+   134  000009                     ___lldiv@quotient:
+   135                           	callstack 0
+   136                           
+   137                           ; 4 bytes @ 0x8
+   138  000009                     	ds	4
+   139  00000D                     ___lldiv@counter:
+   140                           	callstack 0
+   141                           
+   142                           ; 1 bytes @ 0xC
+   143  00000D                     	ds	1
+   144  00000E                     MAX7219Print@Number:
+   145                           	callstack 0
+   146                           
+   147                           ; 4 bytes @ 0xD
+   148  00000E                     	ds	4
+   149  000012                     MAX7219Print@NumberOfDigits:
+   150                           	callstack 0
+   151                           
+   152                           ; 2 bytes @ 0x11
+   153  000012                     	ds	2
+   154  000014                     ??_MAX7219Print:
+   155                           
+   156                           ; 1 bytes @ 0x13
+   157  000014                     	ds	8
+   158  00001C                     MAX7219Print@i:
+   159                           	callstack 0
+   160                           
+   161                           ; 4 bytes @ 0x1B
+   162  00001C                     	ds	4
+   163  000020                     ??_main:
+   164                           
+   165                           ; 1 bytes @ 0x1F
+   166  000020                     	ds	2
+   167                           
+   168 ;;
+   169 ;;Main: autosize = 0, tempsize = 2, incstack = 0, save=0
+   170 ;;
+   171 ;; *************** function _main *****************
+   172 ;; Defined at:
+   173 ;;		line 118 in file "main_MAX7219.c"
+   174 ;; Parameters:    Size  Location     Type
+   175 ;;		None
+   176 ;; Auto vars:     Size  Location     Type
+   177 ;;		None
+   178 ;; Return value:  Size  Location     Type
+   179 ;;                  1    wreg      void 
+   180 ;; Registers used:
+   181 ;;		wreg, status,2, status,0, cstack
+   182 ;; Tracked objects:
+   183 ;;		On entry : 0/0
+   184 ;;		On exit  : 0/0
+   185 ;;		Unchanged: 0/0
+   186 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   187 ;;      Params:         0       0       0       0       0       0       0
+   188 ;;      Locals:         0       0       0       0       0       0       0
+   189 ;;      Temps:          2       0       0       0       0       0       0
+   190 ;;      Totals:         2       0       0       0       0       0       0
+   191 ;;Total ram usage:        2 bytes
+   192 ;; Hardware stack levels required when called: 3
+   193 ;; This function calls:
+   194 ;;		_MAX7219Print
+   195 ;;		_MAX7219_init
+   196 ;;		_Max7219DisplayOn
+   197 ;;		_Max7219UpdateIntensity
+   198 ;;		_SPI_Init
+   199 ;; This function is called by:
+   200 ;;		Startup code after reset
+   201 ;; This function uses a non-reentrant model
+   202 ;;
+   203                           
+   204                           	psect	text0
+   205  007DDA                     __ptext0:
+   206                           	callstack 0
+   207  007DDA                     _main:
+   208                           	callstack 28
+   209  007DDA                     
+   210                           ;main_MAX7219.c: 120:     PORTCbits.RC0 = 0;
+   211  007DDA  9082               	bcf	130,0,c	;volatile
+   212                           
+   213                           ;main_MAX7219.c: 121:     TRISCbits.RC0 = 0;
+   214  007DDC  9094               	bcf	148,0,c	;volatile
+   215  007DDE                     
+   216                           ;main_MAX7219.c: 122:     SPI_Init();
+   217  007DDE  EC61  F03E         	call	_SPI_Init	;wreg free
+   218                           
+   219                           ;main_MAX7219.c: 124:     MAX7219_init();
+   220  007DE2  EC88  F03E         	call	_MAX7219_init	;wreg free
+   221  007DE6                     
+   222                           ;main_MAX7219.c: 125:     Max7219DisplayOn();
+   223  007DE6  EC4E  F03E         	call	_Max7219DisplayOn	;wreg free
+   224  007DEA                     
+   225                           ;main_MAX7219.c: 126:     Max7219UpdateIntensity(0x04);
+   226  007DEA  0E04               	movlw	4
+   227  007DEC  EC76  F03E         	call	_Max7219UpdateIntensity
+   228  007DF0                     
+   229                           ;main_MAX7219.c: 127:     _delay((unsigned long)((1000)*(8000000/4000.0)));
+   230  007DF0  0E0B               	movlw	11
+   231  007DF2  6E21               	movwf	(??_main+1)^0,c
+   232  007DF4  0E26               	movlw	38
+   233  007DF6  6E20               	movwf	??_main^0,c
+   234  007DF8  0E5E               	movlw	94
+   235  007DFA                     u227:
+   236  007DFA  2EE8               	decfsz	wreg,f,c
+   237  007DFC  D7FE               	bra	u227
+   238  007DFE  2E20               	decfsz	??_main^0,f,c
+   239  007E00  D7FC               	bra	u227
+   240  007E02  2E21               	decfsz	(??_main+1)^0,f,c
+   241  007E04  D7FA               	bra	u227
+   242  007E06                     l929:
+   243                           
+   244                           ;main_MAX7219.c: 129:     {;main_MAX7219.c: 130:     for(i=0;i<99999999;i++)
+   245  007E06  0E00               	movlw	0
+   246  007E08  6E22               	movwf	_i^0,c
+   247  007E0A  0E00               	movlw	0
+   248  007E0C  6E23               	movwf	(_i+1)^0,c
+   249  007E0E  0E00               	movlw	0
+   250  007E10  6E24               	movwf	(_i+2)^0,c
+   251  007E12  0E00               	movlw	0
+   252  007E14  6E25               	movwf	(_i+3)^0,c
+   253  007E16                     l935:
+   254                           
+   255                           ;main_MAX7219.c: 131:     {;main_MAX7219.c: 132:        MAX7219Print(i,7);
+   256  007E16  C022  F00E         	movff	_i,MAX7219Print@Number
+   257  007E1A  C023  F00F         	movff	_i+1,MAX7219Print@Number+1
+   258  007E1E  C024  F010         	movff	_i+2,MAX7219Print@Number+2
+   259  007E22  C025  F011         	movff	_i+3,MAX7219Print@Number+3
+   260  007E26  0E00               	movlw	0
+   261  007E28  6E13               	movwf	(MAX7219Print@NumberOfDigits+1)^0,c
+   262  007E2A  0E07               	movlw	7
+   263  007E2C  6E12               	movwf	MAX7219Print@NumberOfDigits^0,c
+   264  007E2E  EC8F  F03F         	call	_MAX7219Print	;wreg free
+   265  007E32                     
+   266                           ;main_MAX7219.c: 133:        _delay((unsigned long)((100)*(8000000/4000.0)));
+   267  007E32  0E02               	movlw	2
+   268  007E34  6E21               	movwf	(??_main+1)^0,c
+   269  007E36  0E04               	movlw	4
+   270  007E38  6E20               	movwf	??_main^0,c
+   271  007E3A  0EBA               	movlw	186
+   272  007E3C                     u237:
+   273  007E3C  2EE8               	decfsz	wreg,f,c
+   274  007E3E  D7FE               	bra	u237
+   275  007E40  2E20               	decfsz	??_main^0,f,c
+   276  007E42  D7FC               	bra	u237
+   277  007E44  2E21               	decfsz	(??_main+1)^0,f,c
+   278  007E46  D7FA               	bra	u237
+   279  007E48  D000               	nop2	
+   280  007E4A                     
+   281                           ;main_MAX7219.c: 134:     }
+   282  007E4A  0E01               	movlw	1
+   283  007E4C  2622               	addwf	_i^0,f,c
+   284  007E4E  0E00               	movlw	0
+   285  007E50  2223               	addwfc	(_i+1)^0,f,c
+   286  007E52  2224               	addwfc	(_i+2)^0,f,c
+   287  007E54  2225               	addwfc	(_i+3)^0,f,c
+   288  007E56  2822               	incf	_i^0,w,c
+   289  007E58  0EE0               	movlw	224
+   290  007E5A  5823               	subwfb	(_i+1)^0,w,c
+   291  007E5C  0EF5               	movlw	245
+   292  007E5E  5824               	subwfb	(_i+2)^0,w,c
+   293  007E60  0E05               	movlw	5
+   294  007E62  5825               	subwfb	(_i+3)^0,w,c
+   295  007E64  A0D8               	btfss	status,0,c
+   296  007E66  EF37  F03F         	goto	u211
+   297  007E6A  EF39  F03F         	goto	u210
+   298  007E6E                     u211:
+   299  007E6E  EF0B  F03F         	goto	l935
+   300  007E72                     u210:
+   301  007E72  EF03  F03F         	goto	l929
+   302  007E76  EF00  F000         	goto	start
+   303  007E7A                     __end_of_main:
+   304                           	callstack 0
+   305                           
+   306 ;; *************** function _Max7219UpdateIntensity *****************
+   307 ;; Defined at:
+   308 ;;		line 107 in file "main_MAX7219.c"
+   309 ;; Parameters:    Size  Location     Type
+   310 ;;  OnValue         1    wreg     unsigned char 
+   311 ;; Auto vars:     Size  Location     Type
+   312 ;;  OnValue         1    1[COMRAM] unsigned char 
+   313 ;; Return value:  Size  Location     Type
+   314 ;;                  1    wreg      void 
+   315 ;; Registers used:
+   316 ;;		wreg, status,2, status,0, cstack
+   317 ;; Tracked objects:
+   318 ;;		On entry : 0/0
+   319 ;;		On exit  : 0/0
+   320 ;;		Unchanged: 0/0
+   321 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   322 ;;      Params:         0       0       0       0       0       0       0
+   323 ;;      Locals:         1       0       0       0       0       0       0
+   324 ;;      Temps:          0       0       0       0       0       0       0
+   325 ;;      Totals:         1       0       0       0       0       0       0
+   326 ;;Total ram usage:        1 bytes
+   327 ;; Hardware stack levels used: 1
+   328 ;; Hardware stack levels required when called: 1
+   329 ;; This function calls:
+   330 ;;		_SPI_Write
+   331 ;; This function is called by:
+   332 ;;		_main
+   333 ;; This function uses a non-reentrant model
+   334 ;;
+   335                           
+   336                           	psect	text1
+   337  007CEC                     __ptext1:
+   338                           	callstack 0
+   339  007CEC                     _Max7219UpdateIntensity:
+   340                           	callstack 29
+   341                           
+   342                           ;incstack = 0
+   343                           ;Max7219UpdateIntensity@OnValue stored from wreg
+   344  007CEC  6E02               	movwf	Max7219UpdateIntensity@OnValue^0,c
+   345  007CEE                     
+   346                           ;main_MAX7219.c: 107: void Max7219UpdateIntensity(char OnValue);main_MAX7219.c: 108: {;m
+      +                          ain_MAX7219.c: 109:   if(OnValue>=0&&OnValue<=15)
+   347  007CEE  0E10               	movlw	16
+   348  007CF0  6002               	cpfslt	Max7219UpdateIntensity@OnValue^0,c
+   349  007CF2  EF7D  F03E         	goto	u101
+   350  007CF6  EF7F  F03E         	goto	u100
+   351  007CFA                     u101:
+   352  007CFA  EF87  F03E         	goto	l53
+   353  007CFE                     u100:
+   354  007CFE                     
+   355                           ;main_MAX7219.c: 110:   {;main_MAX7219.c: 111:     PORTCbits.RC0=0;
+   356  007CFE  9082               	bcf	130,0,c	;volatile
+   357  007D00                     
+   358                           ;main_MAX7219.c: 112:     SPI_Write(0x0a);
+   359  007D00  0E0A               	movlw	10
+   360  007D02  EC6B  F03E         	call	_SPI_Write
+   361  007D06                     
+   362                           ;main_MAX7219.c: 113:     SPI_Write(OnValue);
+   363  007D06  5002               	movf	Max7219UpdateIntensity@OnValue^0,w,c
+   364  007D08  EC6B  F03E         	call	_SPI_Write
+   365  007D0C                     
+   366                           ;main_MAX7219.c: 114:     PORTCbits.RC0=1;
+   367  007D0C  8082               	bsf	130,0,c	;volatile
+   368  007D0E                     l53:
+   369  007D0E  0012               	return		;funcret
+   370  007D10                     __end_of_Max7219UpdateIntensity:
+   371                           	callstack 0
+   372                           
+   373 ;; *************** function _Max7219DisplayOn *****************
+   374 ;; Defined at:
+   375 ;;		line 100 in file "main_MAX7219.c"
+   376 ;; Parameters:    Size  Location     Type
+   377 ;;		None
+   378 ;; Auto vars:     Size  Location     Type
+   379 ;;		None
+   380 ;; Return value:  Size  Location     Type
+   381 ;;                  1    wreg      void 
+   382 ;; Registers used:
+   383 ;;		wreg, cstack
+   384 ;; Tracked objects:
+   385 ;;		On entry : 0/0
+   386 ;;		On exit  : 0/0
+   387 ;;		Unchanged: 0/0
+   388 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   389 ;;      Params:         0       0       0       0       0       0       0
+   390 ;;      Locals:         0       0       0       0       0       0       0
+   391 ;;      Temps:          0       0       0       0       0       0       0
+   392 ;;      Totals:         0       0       0       0       0       0       0
+   393 ;;Total ram usage:        0 bytes
+   394 ;; Hardware stack levels used: 1
+   395 ;; Hardware stack levels required when called: 1
+   396 ;; This function calls:
+   397 ;;		_SPI_Write
+   398 ;; This function is called by:
+   399 ;;		_main
+   400 ;; This function uses a non-reentrant model
+   401 ;;
+   402                           
+   403                           	psect	text2
+   404  007C9C                     __ptext2:
+   405                           	callstack 0
+   406  007C9C                     _Max7219DisplayOn:
+   407                           	callstack 29
+   408  007C9C                     
+   409                           ;main_MAX7219.c: 102:   PORTCbits.RC0=0;
+   410  007C9C  9082               	bcf	130,0,c	;volatile
+   411  007C9E                     
+   412                           ;main_MAX7219.c: 103:   SPI_Write(0x0C);
+   413  007C9E  0E0C               	movlw	12
+   414  007CA0  EC6B  F03E         	call	_SPI_Write
+   415                           
+   416                           ;main_MAX7219.c: 104:   SPI_Write(0x01);
+   417  007CA4  0E01               	movlw	1
+   418  007CA6  EC6B  F03E         	call	_SPI_Write
+   419  007CAA                     
+   420                           ;main_MAX7219.c: 105:   PORTCbits.RC0=1;
+   421  007CAA  8082               	bsf	130,0,c	;volatile
+   422  007CAC  0012               	return		;funcret
+   423  007CAE                     __end_of_Max7219DisplayOn:
+   424                           	callstack 0
+   425                           
+   426 ;; *************** function _MAX7219_init *****************
+   427 ;; Defined at:
+   428 ;;		line 70 in file "main_MAX7219.c"
+   429 ;; Parameters:    Size  Location     Type
+   430 ;;		None
+   431 ;; Auto vars:     Size  Location     Type
+   432 ;;		None
+   433 ;; Return value:  Size  Location     Type
+   434 ;;                  1    wreg      void 
+   435 ;; Registers used:
+   436 ;;		wreg, status,2, cstack
+   437 ;; Tracked objects:
+   438 ;;		On entry : 0/0
+   439 ;;		On exit  : 0/0
+   440 ;;		Unchanged: 0/0
+   441 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   442 ;;      Params:         0       0       0       0       0       0       0
+   443 ;;      Locals:         0       0       0       0       0       0       0
+   444 ;;      Temps:          0       0       0       0       0       0       0
+   445 ;;      Totals:         0       0       0       0       0       0       0
+   446 ;;Total ram usage:        0 bytes
+   447 ;; Hardware stack levels used: 1
+   448 ;; Hardware stack levels required when called: 2
+   449 ;; This function calls:
+   450 ;;		_MAX7219_Write
+   451 ;;		_SPI_Init
+   452 ;; This function is called by:
+   453 ;;		_main
+   454 ;; This function uses a non-reentrant model
+   455 ;;
+   456                           
+   457                           	psect	text3
+   458  007D10                     __ptext3:
+   459                           	callstack 0
+   460  007D10                     _MAX7219_init:
+   461                           	callstack 28
+   462  007D10                     
+   463                           ;main_MAX7219.c: 72:   SPI_Init();
+   464  007D10  EC61  F03E         	call	_SPI_Init	;wreg free
+   465                           
+   466                           ;main_MAX7219.c: 74:   MAX7219_Write(0x09,0xFF);
+   467  007D14  0EFF               	movlw	255
+   468  007D16  6E02               	movwf	MAX7219_Write@data1^0,c
+   469  007D18  0E09               	movlw	9
+   470  007D1A  EC57  F03E         	call	_MAX7219_Write
+   471                           
+   472                           ;main_MAX7219.c: 75:   MAX7219_Write(0x0A,0x0F);
+   473  007D1E  0E0F               	movlw	15
+   474  007D20  6E02               	movwf	MAX7219_Write@data1^0,c
+   475  007D22  0E0A               	movlw	10
+   476  007D24  EC57  F03E         	call	_MAX7219_Write
+   477                           
+   478                           ;main_MAX7219.c: 76:   MAX7219_Write(0x0B,0x07);
+   479  007D28  0E07               	movlw	7
+   480  007D2A  6E02               	movwf	MAX7219_Write@data1^0,c
+   481  007D2C  0E0B               	movlw	11
+   482  007D2E  EC57  F03E         	call	_MAX7219_Write
+   483                           
+   484                           ;main_MAX7219.c: 77:   MAX7219_Write(0x0C,0x01);
+   485  007D32  0E01               	movlw	1
+   486  007D34  6E02               	movwf	MAX7219_Write@data1^0,c
+   487  007D36  0E0C               	movlw	12
+   488  007D38  EC57  F03E         	call	_MAX7219_Write
+   489                           
+   490                           ;main_MAX7219.c: 78:   MAX7219_Write(0x0F,0x01);
+   491  007D3C  0E01               	movlw	1
+   492  007D3E  6E02               	movwf	MAX7219_Write@data1^0,c
+   493  007D40  0E0F               	movlw	15
+   494  007D42  EC57  F03E         	call	_MAX7219_Write
+   495                           
+   496                           ;main_MAX7219.c: 79:   MAX7219_Write(0x0F,0x00);
+   497  007D46  0E00               	movlw	0
+   498  007D48  6E02               	movwf	MAX7219_Write@data1^0,c
+   499  007D4A  0E0F               	movlw	15
+   500  007D4C  EC57  F03E         	call	_MAX7219_Write
+   501  007D50  0012               	return		;funcret
+   502  007D52                     __end_of_MAX7219_init:
+   503                           	callstack 0
+   504                           
+   505 ;; *************** function _SPI_Init *****************
+   506 ;; Defined at:
+   507 ;;		line 41 in file "main_MAX7219.c"
+   508 ;; Parameters:    Size  Location     Type
+   509 ;;		None
+   510 ;; Auto vars:     Size  Location     Type
+   511 ;;		None
+   512 ;; Return value:  Size  Location     Type
+   513 ;;                  1    wreg      void 
+   514 ;; Registers used:
+   515 ;;		wreg, status,2
+   516 ;; Tracked objects:
+   517 ;;		On entry : 0/0
+   518 ;;		On exit  : 0/0
+   519 ;;		Unchanged: 0/0
+   520 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   521 ;;      Params:         0       0       0       0       0       0       0
+   522 ;;      Locals:         0       0       0       0       0       0       0
+   523 ;;      Temps:          0       0       0       0       0       0       0
+   524 ;;      Totals:         0       0       0       0       0       0       0
+   525 ;;Total ram usage:        0 bytes
+   526 ;; Hardware stack levels used: 1
+   527 ;; This function calls:
+   528 ;;		Nothing
+   529 ;; This function is called by:
+   530 ;;		_MAX7219_init
+   531 ;;		_main
+   532 ;; This function uses a non-reentrant model
+   533 ;;
+   534                           
+   535                           	psect	text4
+   536  007CC2                     __ptext4:
+   537                           	callstack 0
+   538  007CC2                     _SPI_Init:
+   539                           	callstack 30
+   540  007CC2                     
+   541                           ;main_MAX7219.c: 43:     TRISAbits.RA5 = 1;
+   542  007CC2  8A92               	bsf	146,5,c	;volatile
+   543                           
+   544                           ;main_MAX7219.c: 44:     TRISCbits.RC3 = 0;
+   545  007CC4  9694               	bcf	148,3,c	;volatile
+   546                           
+   547                           ;main_MAX7219.c: 45:     TRISCbits.RC4 = 1 ;
+   548  007CC6  8894               	bsf	148,4,c	;volatile
+   549                           
+   550                           ;main_MAX7219.c: 46:     TRISCbits.RC5 = 0;
+   551  007CC8  9A94               	bcf	148,5,c	;volatile
+   552                           
+   553                           ;main_MAX7219.c: 47:     TRISAbits.RA5 = 0;
+   554  007CCA  9A92               	bcf	146,5,c	;volatile
+   555  007CCC                     
+   556                           ;main_MAX7219.c: 48:     SSPSTAT = 0x80;
+   557  007CCC  0E80               	movlw	128
+   558  007CCE  6EC7               	movwf	199,c	;volatile
+   559                           
+   560                           ;main_MAX7219.c: 49:     SSPCON1 = 0x30;
+   561  007CD0  0E30               	movlw	48
+   562  007CD2  6EC6               	movwf	198,c	;volatile
+   563  007CD4  0012               	return		;funcret
+   564  007CD6                     __end_of_SPI_Init:
+   565                           	callstack 0
+   566                           
+   567 ;; *************** function _MAX7219_Write *****************
+   568 ;; Defined at:
+   569 ;;		line 63 in file "main_MAX7219.c"
+   570 ;; Parameters:    Size  Location     Type
+   571 ;;  reg1            1    wreg     unsigned char 
+   572 ;;  data1           1    1[COMRAM] unsigned char 
+   573 ;; Auto vars:     Size  Location     Type
+   574 ;;  reg1            1    2[COMRAM] unsigned char 
+   575 ;; Return value:  Size  Location     Type
+   576 ;;                  1    wreg      void 
+   577 ;; Registers used:
+   578 ;;		wreg, status,2, cstack
+   579 ;; Tracked objects:
+   580 ;;		On entry : 0/0
+   581 ;;		On exit  : 0/0
+   582 ;;		Unchanged: 0/0
+   583 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   584 ;;      Params:         1       0       0       0       0       0       0
+   585 ;;      Locals:         1       0       0       0       0       0       0
+   586 ;;      Temps:          0       0       0       0       0       0       0
+   587 ;;      Totals:         2       0       0       0       0       0       0
+   588 ;;Total ram usage:        2 bytes
+   589 ;; Hardware stack levels used: 1
+   590 ;; Hardware stack levels required when called: 1
+   591 ;; This function calls:
+   592 ;;		_SPI_Write
+   593 ;; This function is called by:
+   594 ;;		_MAX7219_init
+   595 ;; This function uses a non-reentrant model
+   596 ;;
+   597                           
+   598                           	psect	text5
+   599  007CAE                     __ptext5:
+   600                           	callstack 0
+   601  007CAE                     _MAX7219_Write:
+   602                           	callstack 28
+   603                           
+   604                           ;incstack = 0
+   605                           ;MAX7219_Write@reg1 stored from wreg
+   606  007CAE  6E03               	movwf	MAX7219_Write@reg1^0,c
+   607  007CB0                     
+   608                           ;main_MAX7219.c: 63: void MAX7219_Write(char reg1,char data1);main_MAX7219.c: 64: {;main
+      +                          _MAX7219.c: 65:     PORTCbits.RC0 = 0;
+   609  007CB0  9082               	bcf	130,0,c	;volatile
+   610  007CB2                     
+   611                           ;main_MAX7219.c: 66:     SPI_Write(reg1);
+   612  007CB2  5003               	movf	MAX7219_Write@reg1^0,w,c
+   613  007CB4  EC6B  F03E         	call	_SPI_Write
+   614                           
+   615                           ;main_MAX7219.c: 67:     SPI_Write(data1);
+   616  007CB8  5002               	movf	MAX7219_Write@data1^0,w,c
+   617  007CBA  EC6B  F03E         	call	_SPI_Write
+   618  007CBE                     
+   619                           ;main_MAX7219.c: 68:     PORTCbits.RC0 = 1;
+   620  007CBE  8082               	bsf	130,0,c	;volatile
+   621  007CC0  0012               	return		;funcret
+   622  007CC2                     __end_of_MAX7219_Write:
+   623                           	callstack 0
+   624                           
+   625 ;; *************** function _MAX7219Print *****************
+   626 ;; Defined at:
+   627 ;;		line 82 in file "main_MAX7219.c"
+   628 ;; Parameters:    Size  Location     Type
+   629 ;;  Number          4   13[COMRAM] unsigned long 
+   630 ;;  NumberOfDigi    2   17[COMRAM] unsigned short 
+   631 ;; Auto vars:     Size  Location     Type
+   632 ;;  i               4   27[COMRAM] long 
+   633 ;; Return value:  Size  Location     Type
+   634 ;;                  1    wreg      void 
+   635 ;; Registers used:
+   636 ;;		wreg, status,2, status,0, cstack
+   637 ;; Tracked objects:
+   638 ;;		On entry : 0/0
+   639 ;;		On exit  : 0/0
+   640 ;;		Unchanged: 0/0
+   641 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   642 ;;      Params:         6       0       0       0       0       0       0
+   643 ;;      Locals:         4       0       0       0       0       0       0
+   644 ;;      Temps:          8       0       0       0       0       0       0
+   645 ;;      Totals:        18       0       0       0       0       0       0
+   646 ;;Total ram usage:       18 bytes
+   647 ;; Hardware stack levels used: 1
+   648 ;; Hardware stack levels required when called: 1
+   649 ;; This function calls:
+   650 ;;		_SPI_Write
+   651 ;;		___lldiv
+   652 ;;		___llmod
+   653 ;; This function is called by:
+   654 ;;		_main
+   655 ;; This function uses a non-reentrant model
+   656 ;;
+   657                           
+   658                           	psect	text6
+   659  007F1E                     __ptext6:
+   660                           	callstack 0
+   661  007F1E                     _MAX7219Print:
+   662                           	callstack 29
+   663  007F1E                     
+   664                           ;main_MAX7219.c: 82: void MAX7219Print(unsigned long Number,unsigned short NumberOfDigit
+      +                          s);main_MAX7219.c: 83: {;main_MAX7219.c: 84:     for(long i=1;Number>0||i-NumberOfDigits
+      +                          <=0;Number/=10,i++)
+   665  007F1E  0E01               	movlw	1
+   666  007F20  6E1C               	movwf	MAX7219Print@i^0,c
+   667  007F22  0E00               	movlw	0
+   668  007F24  6E1D               	movwf	(MAX7219Print@i+1)^0,c
+   669  007F26  0E00               	movlw	0
+   670  007F28  6E1E               	movwf	(MAX7219Print@i+2)^0,c
+   671  007F2A  0E00               	movlw	0
+   672  007F2C  6E1F               	movwf	(MAX7219Print@i+3)^0,c
+   673  007F2E  EFD3  F03F         	goto	l915
+   674  007F32                     l41:
+   675                           
+   676                           ;main_MAX7219.c: 85:     {;main_MAX7219.c: 86:         PORTCbits.RC0 = 0;
+   677  007F32  9082               	bcf	130,0,c	;volatile
+   678  007F34                     
+   679                           ;main_MAX7219.c: 87:         SPI_Write(i);
+   680  007F34  501C               	movf	MAX7219Print@i^0,w,c
+   681  007F36  EC6B  F03E         	call	_SPI_Write
+   682  007F3A                     
+   683                           ;main_MAX7219.c: 88:         SPI_Write(Number%10);
+   684  007F3A  C00E  F001         	movff	MAX7219Print@Number,___llmod@dividend
+   685  007F3E  C00F  F002         	movff	MAX7219Print@Number+1,___llmod@dividend+1
+   686  007F42  C010  F003         	movff	MAX7219Print@Number+2,___llmod@dividend+2
+   687  007F46  C011  F004         	movff	MAX7219Print@Number+3,___llmod@dividend+3
+   688  007F4A  0E0A               	movlw	10
+   689  007F4C  6E05               	movwf	___llmod@divisor^0,c
+   690  007F4E  0E00               	movlw	0
+   691  007F50  6E06               	movwf	(___llmod@divisor+1)^0,c
+   692  007F52  0E00               	movlw	0
+   693  007F54  6E07               	movwf	(___llmod@divisor+2)^0,c
+   694  007F56  0E00               	movlw	0
+   695  007F58  6E08               	movwf	(___llmod@divisor+3)^0,c
+   696  007F5A  ECA9  F03E         	call	___llmod	;wreg free
+   697  007F5E  5001               	movf	?___llmod^0,w,c
+   698  007F60  EC6B  F03E         	call	_SPI_Write
+   699  007F64                     
+   700                           ;main_MAX7219.c: 89:         PORTCbits.RC0 = 1;
+   701  007F64  8082               	bsf	130,0,c	;volatile
+   702  007F66                     
+   703                           ;main_MAX7219.c: 90:     }
+   704  007F66  C00E  F001         	movff	MAX7219Print@Number,___lldiv@dividend
+   705  007F6A  C00F  F002         	movff	MAX7219Print@Number+1,___lldiv@dividend+1
+   706  007F6E  C010  F003         	movff	MAX7219Print@Number+2,___lldiv@dividend+2
+   707  007F72  C011  F004         	movff	MAX7219Print@Number+3,___lldiv@dividend+3
+   708  007F76  0E0A               	movlw	10
+   709  007F78  6E05               	movwf	___lldiv@divisor^0,c
+   710  007F7A  0E00               	movlw	0
+   711  007F7C  6E06               	movwf	(___lldiv@divisor+1)^0,c
+   712  007F7E  0E00               	movlw	0
+   713  007F80  6E07               	movwf	(___lldiv@divisor+2)^0,c
+   714  007F82  0E00               	movlw	0
+   715  007F84  6E08               	movwf	(___lldiv@divisor+3)^0,c
+   716  007F86  EC3D  F03F         	call	___lldiv	;wreg free
+   717  007F8A  C001  F00E         	movff	?___lldiv,MAX7219Print@Number
+   718  007F8E  C002  F00F         	movff	?___lldiv+1,MAX7219Print@Number+1
+   719  007F92  C003  F010         	movff	?___lldiv+2,MAX7219Print@Number+2
+   720  007F96  C004  F011         	movff	?___lldiv+3,MAX7219Print@Number+3
+   721  007F9A  0E01               	movlw	1
+   722  007F9C  261C               	addwf	MAX7219Print@i^0,f,c
+   723  007F9E  0E00               	movlw	0
+   724  007FA0  221D               	addwfc	(MAX7219Print@i+1)^0,f,c
+   725  007FA2  221E               	addwfc	(MAX7219Print@i+2)^0,f,c
+   726  007FA4  221F               	addwfc	(MAX7219Print@i+3)^0,f,c
+   727  007FA6                     l915:
+   728  007FA6  500E               	movf	MAX7219Print@Number^0,w,c
+   729  007FA8  100F               	iorwf	(MAX7219Print@Number+1)^0,w,c
+   730  007FAA  1010               	iorwf	(MAX7219Print@Number+2)^0,w,c
+   731  007FAC  1011               	iorwf	(MAX7219Print@Number+3)^0,w,c
+   732  007FAE  A4D8               	btfss	status,2,c
+   733  007FB0  EFDC  F03F         	goto	u191
+   734  007FB4  EFDE  F03F         	goto	u190
+   735  007FB8                     u191:
+   736  007FB8  EF99  F03F         	goto	l41
+   737  007FBC                     u190:
+   738  007FBC  5012               	movf	MAX7219Print@NumberOfDigits^0,w,c
+   739  007FBE  6E14               	movwf	??_MAX7219Print^0,c
+   740  007FC0  5013               	movf	(MAX7219Print@NumberOfDigits+1)^0,w,c
+   741  007FC2  6E15               	movwf	(??_MAX7219Print+1)^0,c
+   742  007FC4  6A16               	clrf	(??_MAX7219Print+2)^0,c
+   743  007FC6  6A17               	clrf	(??_MAX7219Print+3)^0,c
+   744  007FC8  5014               	movf	??_MAX7219Print^0,w,c
+   745  007FCA  5C1C               	subwf	MAX7219Print@i^0,w,c
+   746  007FCC  6E18               	movwf	(??_MAX7219Print+4)^0,c
+   747  007FCE  5015               	movf	(??_MAX7219Print+1)^0,w,c
+   748  007FD0  581D               	subwfb	(MAX7219Print@i+1)^0,w,c
+   749  007FD2  6E19               	movwf	(??_MAX7219Print+5)^0,c
+   750  007FD4  5016               	movf	(??_MAX7219Print+2)^0,w,c
+   751  007FD6  581E               	subwfb	(MAX7219Print@i+2)^0,w,c
+   752  007FD8  6E1A               	movwf	(??_MAX7219Print+6)^0,c
+   753  007FDA  5017               	movf	(??_MAX7219Print+3)^0,w,c
+   754  007FDC  581F               	subwfb	(MAX7219Print@i+3)^0,w,c
+   755  007FDE  6E1B               	movwf	(??_MAX7219Print+7)^0,c
+   756  007FE0  BE1B               	btfsc	(??_MAX7219Print+7)^0,7,c
+   757  007FE2  EFFD  F03F         	goto	u201
+   758  007FE6  501B               	movf	(??_MAX7219Print+7)^0,w,c
+   759  007FE8  101A               	iorwf	(??_MAX7219Print+6)^0,w,c
+   760  007FEA  1019               	iorwf	(??_MAX7219Print+5)^0,w,c
+   761  007FEC  E108               	bnz	u200
+   762  007FEE  0418               	decf	(??_MAX7219Print+4)^0,w,c
+   763  007FF0  A0D8               	btfss	status,0,c
+   764  007FF2  EFFD  F03F         	goto	u201
+   765  007FF6  EFFF  F03F         	goto	u200
+   766  007FFA                     u201:
+   767  007FFA  EF99  F03F         	goto	l41
+   768  007FFE                     u200:
+   769  007FFE  0012               	return		;funcret
+   770  008000                     __end_of_MAX7219Print:
+   771                           	callstack 0
+   772                           
+   773 ;; *************** function ___llmod *****************
+   774 ;; Defined at:
+   775 ;;		line 7 in file "C:\Program Files\Microchip\xc8\v2.32\pic\sources\c99\common\llmod.c"
+   776 ;; Parameters:    Size  Location     Type
+   777 ;;  dividend        4    0[COMRAM] unsigned long 
+   778 ;;  divisor         4    4[COMRAM] unsigned long 
+   779 ;; Auto vars:     Size  Location     Type
+   780 ;;  counter         1    8[COMRAM] unsigned char 
+   781 ;; Return value:  Size  Location     Type
+   782 ;;                  4    0[COMRAM] unsigned long 
+   783 ;; Registers used:
+   784 ;;		wreg, status,2, status,0
+   785 ;; Tracked objects:
+   786 ;;		On entry : 0/0
+   787 ;;		On exit  : 0/0
+   788 ;;		Unchanged: 0/0
+   789 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   790 ;;      Params:         8       0       0       0       0       0       0
+   791 ;;      Locals:         1       0       0       0       0       0       0
+   792 ;;      Temps:          0       0       0       0       0       0       0
+   793 ;;      Totals:         9       0       0       0       0       0       0
+   794 ;;Total ram usage:        9 bytes
+   795 ;; Hardware stack levels used: 1
+   796 ;; This function calls:
+   797 ;;		Nothing
+   798 ;; This function is called by:
+   799 ;;		_MAX7219Print
+   800 ;; This function uses a non-reentrant model
+   801 ;;
+   802                           
+   803                           	psect	text7
+   804  007D52                     __ptext7:
+   805                           	callstack 0
+   806  007D52                     ___llmod:
+   807                           	callstack 29
+   808  007D52  5005               	movf	___llmod@divisor^0,w,c
+   809  007D54  1006               	iorwf	(___llmod@divisor+1)^0,w,c
+   810  007D56  1007               	iorwf	(___llmod@divisor+2)^0,w,c
+   811  007D58  1008               	iorwf	(___llmod@divisor+3)^0,w,c
+   812  007D5A  B4D8               	btfsc	status,2,c
+   813  007D5C  EFB2  F03E         	goto	u161
+   814  007D60  EFB4  F03E         	goto	u160
+   815  007D64                     u161:
+   816  007D64  EFE4  F03E         	goto	l488
+   817  007D68                     u160:
+   818  007D68  0E01               	movlw	1
+   819  007D6A  6E09               	movwf	___llmod@counter^0,c
+   820  007D6C  EFBE  F03E         	goto	l891
+   821  007D70                     l889:
+   822  007D70  90D8               	bcf	status,0,c
+   823  007D72  3605               	rlcf	___llmod@divisor^0,f,c
+   824  007D74  3606               	rlcf	(___llmod@divisor+1)^0,f,c
+   825  007D76  3607               	rlcf	(___llmod@divisor+2)^0,f,c
+   826  007D78  3608               	rlcf	(___llmod@divisor+3)^0,f,c
+   827  007D7A  2A09               	incf	___llmod@counter^0,f,c
+   828  007D7C                     l891:
+   829  007D7C  AE08               	btfss	(___llmod@divisor+3)^0,7,c
+   830  007D7E  EFC3  F03E         	goto	u171
+   831  007D82  EFC5  F03E         	goto	u170
+   832  007D86                     u171:
+   833  007D86  EFB8  F03E         	goto	l889
+   834  007D8A                     u170:
+   835  007D8A                     l893:
+   836  007D8A  5005               	movf	___llmod@divisor^0,w,c
+   837  007D8C  5C01               	subwf	___llmod@dividend^0,w,c
+   838  007D8E  5006               	movf	(___llmod@divisor+1)^0,w,c
+   839  007D90  5802               	subwfb	(___llmod@dividend+1)^0,w,c
+   840  007D92  5007               	movf	(___llmod@divisor+2)^0,w,c
+   841  007D94  5803               	subwfb	(___llmod@dividend+2)^0,w,c
+   842  007D96  5008               	movf	(___llmod@divisor+3)^0,w,c
+   843  007D98  5804               	subwfb	(___llmod@dividend+3)^0,w,c
+   844  007D9A  A0D8               	btfss	status,0,c
+   845  007D9C  EFD2  F03E         	goto	u181
+   846  007DA0  EFD4  F03E         	goto	u180
+   847  007DA4                     u181:
+   848  007DA4  EFDC  F03E         	goto	l897
+   849  007DA8                     u180:
+   850  007DA8  5005               	movf	___llmod@divisor^0,w,c
+   851  007DAA  5E01               	subwf	___llmod@dividend^0,f,c
+   852  007DAC  5006               	movf	(___llmod@divisor+1)^0,w,c
+   853  007DAE  5A02               	subwfb	(___llmod@dividend+1)^0,f,c
+   854  007DB0  5007               	movf	(___llmod@divisor+2)^0,w,c
+   855  007DB2  5A03               	subwfb	(___llmod@dividend+2)^0,f,c
+   856  007DB4  5008               	movf	(___llmod@divisor+3)^0,w,c
+   857  007DB6  5A04               	subwfb	(___llmod@dividend+3)^0,f,c
+   858  007DB8                     l897:
+   859  007DB8  90D8               	bcf	status,0,c
+   860  007DBA  3208               	rrcf	(___llmod@divisor+3)^0,f,c
+   861  007DBC  3207               	rrcf	(___llmod@divisor+2)^0,f,c
+   862  007DBE  3206               	rrcf	(___llmod@divisor+1)^0,f,c
+   863  007DC0  3205               	rrcf	___llmod@divisor^0,f,c
+   864  007DC2  2E09               	decfsz	___llmod@counter^0,f,c
+   865  007DC4  EFC5  F03E         	goto	l893
+   866  007DC8                     l488:
+   867  007DC8  C001  F001         	movff	___llmod@dividend,?___llmod
+   868  007DCC  C002  F002         	movff	___llmod@dividend+1,?___llmod+1
+   869  007DD0  C003  F003         	movff	___llmod@dividend+2,?___llmod+2
+   870  007DD4  C004  F004         	movff	___llmod@dividend+3,?___llmod+3
+   871  007DD8  0012               	return		;funcret
+   872  007DDA                     __end_of___llmod:
+   873                           	callstack 0
+   874                           
+   875 ;; *************** function ___lldiv *****************
+   876 ;; Defined at:
+   877 ;;		line 7 in file "C:\Program Files\Microchip\xc8\v2.32\pic\sources\c99\common\__lldiv.c"
+   878 ;; Parameters:    Size  Location     Type
+   879 ;;  dividend        4    0[COMRAM] unsigned long 
+   880 ;;  divisor         4    4[COMRAM] unsigned long 
+   881 ;; Auto vars:     Size  Location     Type
+   882 ;;  quotient        4    8[COMRAM] unsigned long 
+   883 ;;  counter         1   12[COMRAM] unsigned char 
+   884 ;; Return value:  Size  Location     Type
+   885 ;;                  4    0[COMRAM] unsigned long 
+   886 ;; Registers used:
+   887 ;;		wreg, status,2, status,0
+   888 ;; Tracked objects:
+   889 ;;		On entry : 0/0
+   890 ;;		On exit  : 0/0
+   891 ;;		Unchanged: 0/0
+   892 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+   893 ;;      Params:         8       0       0       0       0       0       0
+   894 ;;      Locals:         5       0       0       0       0       0       0
+   895 ;;      Temps:          0       0       0       0       0       0       0
+   896 ;;      Totals:        13       0       0       0       0       0       0
+   897 ;;Total ram usage:       13 bytes
+   898 ;; Hardware stack levels used: 1
+   899 ;; This function calls:
+   900 ;;		Nothing
+   901 ;; This function is called by:
+   902 ;;		_MAX7219Print
+   903 ;; This function uses a non-reentrant model
+   904 ;;
+   905                           
+   906                           	psect	text8
+   907  007E7A                     __ptext8:
+   908                           	callstack 0
+   909  007E7A                     ___lldiv:
+   910                           	callstack 29
+   911  007E7A  0E00               	movlw	0
+   912  007E7C  6E09               	movwf	___lldiv@quotient^0,c
+   913  007E7E  0E00               	movlw	0
+   914  007E80  6E0A               	movwf	(___lldiv@quotient+1)^0,c
+   915  007E82  0E00               	movlw	0
+   916  007E84  6E0B               	movwf	(___lldiv@quotient+2)^0,c
+   917  007E86  0E00               	movlw	0
+   918  007E88  6E0C               	movwf	(___lldiv@quotient+3)^0,c
+   919  007E8A  5005               	movf	___lldiv@divisor^0,w,c
+   920  007E8C  1006               	iorwf	(___lldiv@divisor+1)^0,w,c
+   921  007E8E  1007               	iorwf	(___lldiv@divisor+2)^0,w,c
+   922  007E90  1008               	iorwf	(___lldiv@divisor+3)^0,w,c
+   923  007E92  B4D8               	btfsc	status,2,c
+   924  007E94  EF4E  F03F         	goto	u131
+   925  007E98  EF50  F03F         	goto	u130
+   926  007E9C                     u131:
+   927  007E9C  EF86  F03F         	goto	l95
+   928  007EA0                     u130:
+   929  007EA0  0E01               	movlw	1
+   930  007EA2  6E0D               	movwf	___lldiv@counter^0,c
+   931  007EA4  EF5A  F03F         	goto	l871
+   932  007EA8                     l869:
+   933  007EA8  90D8               	bcf	status,0,c
+   934  007EAA  3605               	rlcf	___lldiv@divisor^0,f,c
+   935  007EAC  3606               	rlcf	(___lldiv@divisor+1)^0,f,c
+   936  007EAE  3607               	rlcf	(___lldiv@divisor+2)^0,f,c
+   937  007EB0  3608               	rlcf	(___lldiv@divisor+3)^0,f,c
+   938  007EB2  2A0D               	incf	___lldiv@counter^0,f,c
+   939  007EB4                     l871:
+   940  007EB4  AE08               	btfss	(___lldiv@divisor+3)^0,7,c
+   941  007EB6  EF5F  F03F         	goto	u141
+   942  007EBA  EF61  F03F         	goto	u140
+   943  007EBE                     u141:
+   944  007EBE  EF54  F03F         	goto	l869
+   945  007EC2                     u140:
+   946  007EC2                     l873:
+   947  007EC2  90D8               	bcf	status,0,c
+   948  007EC4  3609               	rlcf	___lldiv@quotient^0,f,c
+   949  007EC6  360A               	rlcf	(___lldiv@quotient+1)^0,f,c
+   950  007EC8  360B               	rlcf	(___lldiv@quotient+2)^0,f,c
+   951  007ECA  360C               	rlcf	(___lldiv@quotient+3)^0,f,c
+   952  007ECC  5005               	movf	___lldiv@divisor^0,w,c
+   953  007ECE  5C01               	subwf	___lldiv@dividend^0,w,c
+   954  007ED0  5006               	movf	(___lldiv@divisor+1)^0,w,c
+   955  007ED2  5802               	subwfb	(___lldiv@dividend+1)^0,w,c
+   956  007ED4  5007               	movf	(___lldiv@divisor+2)^0,w,c
+   957  007ED6  5803               	subwfb	(___lldiv@dividend+2)^0,w,c
+   958  007ED8  5008               	movf	(___lldiv@divisor+3)^0,w,c
+   959  007EDA  5804               	subwfb	(___lldiv@dividend+3)^0,w,c
+   960  007EDC  A0D8               	btfss	status,0,c
+   961  007EDE  EF73  F03F         	goto	u151
+   962  007EE2  EF75  F03F         	goto	u150
+   963  007EE6                     u151:
+   964  007EE6  EF7E  F03F         	goto	l881
+   965  007EEA                     u150:
+   966  007EEA  5005               	movf	___lldiv@divisor^0,w,c
+   967  007EEC  5E01               	subwf	___lldiv@dividend^0,f,c
+   968  007EEE  5006               	movf	(___lldiv@divisor+1)^0,w,c
+   969  007EF0  5A02               	subwfb	(___lldiv@dividend+1)^0,f,c
+   970  007EF2  5007               	movf	(___lldiv@divisor+2)^0,w,c
+   971  007EF4  5A03               	subwfb	(___lldiv@dividend+2)^0,f,c
+   972  007EF6  5008               	movf	(___lldiv@divisor+3)^0,w,c
+   973  007EF8  5A04               	subwfb	(___lldiv@dividend+3)^0,f,c
+   974  007EFA  8009               	bsf	___lldiv@quotient^0,0,c
+   975  007EFC                     l881:
+   976  007EFC  90D8               	bcf	status,0,c
+   977  007EFE  3208               	rrcf	(___lldiv@divisor+3)^0,f,c
+   978  007F00  3207               	rrcf	(___lldiv@divisor+2)^0,f,c
+   979  007F02  3206               	rrcf	(___lldiv@divisor+1)^0,f,c
+   980  007F04  3205               	rrcf	___lldiv@divisor^0,f,c
+   981  007F06  2E0D               	decfsz	___lldiv@counter^0,f,c
+   982  007F08  EF61  F03F         	goto	l873
+   983  007F0C                     l95:
+   984  007F0C  C009  F001         	movff	___lldiv@quotient,?___lldiv
+   985  007F10  C00A  F002         	movff	___lldiv@quotient+1,?___lldiv+1
+   986  007F14  C00B  F003         	movff	___lldiv@quotient+2,?___lldiv+2
+   987  007F18  C00C  F004         	movff	___lldiv@quotient+3,?___lldiv+3
+   988  007F1C  0012               	return		;funcret
+   989  007F1E                     __end_of___lldiv:
+   990                           	callstack 0
+   991                           
+   992 ;; *************** function _SPI_Write *****************
+   993 ;; Defined at:
+   994 ;;		line 51 in file "main_MAX7219.c"
+   995 ;; Parameters:    Size  Location     Type
+   996 ;;  data            1    wreg     unsigned char 
+   997 ;; Auto vars:     Size  Location     Type
+   998 ;;  data            1    0[COMRAM] unsigned char 
+   999 ;; Return value:  Size  Location     Type
+  1000 ;;                  1    wreg      void 
+  1001 ;; Registers used:
+  1002 ;;		wreg
+  1003 ;; Tracked objects:
+  1004 ;;		On entry : 0/0
+  1005 ;;		On exit  : 0/0
+  1006 ;;		Unchanged: 0/0
+  1007 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5
+  1008 ;;      Params:         0       0       0       0       0       0       0
+  1009 ;;      Locals:         1       0       0       0       0       0       0
+  1010 ;;      Temps:          0       0       0       0       0       0       0
+  1011 ;;      Totals:         1       0       0       0       0       0       0
+  1012 ;;Total ram usage:        1 bytes
+  1013 ;; Hardware stack levels used: 1
+  1014 ;; This function calls:
+  1015 ;;		Nothing
+  1016 ;; This function is called by:
+  1017 ;;		_MAX7219_Write
+  1018 ;;		_MAX7219Print
+  1019 ;;		_Max7219DisplayOn
+  1020 ;;		_Max7219UpdateIntensity
+  1021 ;;		_MAX7219DisplayOff
+  1022 ;; This function uses a non-reentrant model
+  1023 ;;
+  1024                           
+  1025                           	psect	text9
+  1026  007CD6                     __ptext9:
+  1027                           	callstack 0
+  1028  007CD6                     _SPI_Write:
+  1029                           	callstack 29
+  1030                           
+  1031                           ;incstack = 0
+  1032                           ;SPI_Write@data stored from wreg
+  1033  007CD6  6E01               	movwf	SPI_Write@data^0,c
+  1034  007CD8                     
+  1035                           ;main_MAX7219.c: 51: void SPI_Write(char data);main_MAX7219.c: 52: {;main_MAX7219.c: 53:
+      +                               SSPBUF = data;
+  1036  007CD8  C001  FFC9         	movff	SPI_Write@data,4041	;volatile
+  1037  007CDC                     l22:
+  1038  007CDC  A0C7               	btfss	199,0,c	;volatile
+  1039  007CDE  EF73  F03E         	goto	u11
+  1040  007CE2  EF75  F03E         	goto	u10
+  1041  007CE6                     u11:
+  1042  007CE6  EF6E  F03E         	goto	l22
+  1043  007CEA                     u10:
+  1044  007CEA  0012               	return		;funcret
+  1045  007CEC                     __end_of_SPI_Write:
+  1046                           	callstack 0
+  1047  0000                     
+  1048                           	psect	rparam
+  1049  0000                     
+  1050                           	psect	idloc
+  1051                           
+  1052                           ;Config register IDLOC0 @ 0x200000
+  1053                           ;	unspecified, using default values
+  1054  200000                     	org	2097152
+  1055  200000  FF                 	db	255
+  1056                           
+  1057                           ;Config register IDLOC1 @ 0x200001
+  1058                           ;	unspecified, using default values
+  1059  200001                     	org	2097153
+  1060  200001  FF                 	db	255
+  1061                           
+  1062                           ;Config register IDLOC2 @ 0x200002
+  1063                           ;	unspecified, using default values
+  1064  200002                     	org	2097154
+  1065  200002  FF                 	db	255
+  1066                           
+  1067                           ;Config register IDLOC3 @ 0x200003
+  1068                           ;	unspecified, using default values
+  1069  200003                     	org	2097155
+  1070  200003  FF                 	db	255
+  1071                           
+  1072                           ;Config register IDLOC4 @ 0x200004
+  1073                           ;	unspecified, using default values
+  1074  200004                     	org	2097156
+  1075  200004  FF                 	db	255
+  1076                           
+  1077                           ;Config register IDLOC5 @ 0x200005
+  1078                           ;	unspecified, using default values
+  1079  200005                     	org	2097157
+  1080  200005  FF                 	db	255
+  1081                           
+  1082                           ;Config register IDLOC6 @ 0x200006
+  1083                           ;	unspecified, using default values
+  1084  200006                     	org	2097158
+  1085  200006  FF                 	db	255
+  1086                           
+  1087                           ;Config register IDLOC7 @ 0x200007
+  1088                           ;	unspecified, using default values
+  1089  200007                     	org	2097159
+  1090  200007  FF                 	db	255
+  1091                           
+  1092                           	psect	config
+  1093                           
+  1094                           ; Padding undefined space
+  1095  300000                     	org	3145728
+  1096  300000  FF                 	db	255
+  1097                           
+  1098                           ;Config register CONFIG1H @ 0x300001
+  1099                           ;	Oscillator Selection bits
+  1100                           ;	OSC = HS, HS oscillator
+  1101                           ;	Fail-Safe Clock Monitor Enable bit
+  1102                           ;	FCMEN = OFF, Fail-Safe Clock Monitor disabled
+  1103                           ;	Internal/External Oscillator Switchover bit
+  1104                           ;	IESO = OFF, Oscillator Switchover mode disabled
+  1105  300001                     	org	3145729
+  1106  300001  02                 	db	2
+  1107                           
+  1108                           ;Config register CONFIG2L @ 0x300002
+  1109                           ;	Power-up Timer Enable bit
+  1110                           ;	PWRT = OFF, PWRT disabled
+  1111                           ;	Brown-out Reset Enable bits
+  1112                           ;	BOREN = SBORDIS, Brown-out Reset enabled in hardware only (SBOREN is disabled)
+  1113                           ;	Brown Out Reset Voltage bits
+  1114                           ;	BORV = 3, Minimum setting
+  1115  300002                     	org	3145730
+  1116  300002  1F                 	db	31
+  1117                           
+  1118                           ;Config register CONFIG2H @ 0x300003
+  1119                           ;	Watchdog Timer Enable bit
+  1120                           ;	WDT = ON, WDT enabled
+  1121                           ;	Watchdog Timer Postscale Select bits
+  1122                           ;	WDTPS = 32768, 1:32768
+  1123  300003                     	org	3145731
+  1124  300003  1F                 	db	31
+  1125                           
+  1126                           ; Padding undefined space
+  1127  300004                     	org	3145732
+  1128  300004  FF                 	db	255
+  1129                           
+  1130                           ;Config register CONFIG3H @ 0x300005
+  1131                           ;	CCP2 MUX bit
+  1132                           ;	CCP2MX = PORTC, CCP2 input/output is multiplexed with RC1
+  1133                           ;	PORTB A/D Enable bit
+  1134                           ;	PBADEN = ON, PORTB<4:0> pins are configured as analog input channels on Reset
+  1135                           ;	Low-Power Timer1 Oscillator Enable bit
+  1136                           ;	LPT1OSC = OFF, Timer1 configured for higher power operation
+  1137                           ;	MCLR Pin Enable bit
+  1138                           ;	MCLRE = ON, MCLR pin enabled; RE3 input pin disabled
+  1139  300005                     	org	3145733
+  1140  300005  83                 	db	131
+  1141                           
+  1142                           ;Config register CONFIG4L @ 0x300006
+  1143                           ;	Stack Full/Underflow Reset Enable bit
+  1144                           ;	STVREN = ON, Stack full/underflow will cause Reset
+  1145                           ;	Single-Supply ICSP Enable bit
+  1146                           ;	LVP = ON, Single-Supply ICSP enabled
+  1147                           ;	Extended Instruction Set Enable bit
+  1148                           ;	XINST = OFF, Instruction set extension and Indexed Addressing mode disabled (Legacy mo
+      +                          de)
+  1149                           ;	Background Debugger Enable bit
+  1150                           ;	DEBUG = 0x1, unprogrammed default
+  1151  300006                     	org	3145734
+  1152  300006  85                 	db	133
+  1153                           
+  1154                           ; Padding undefined space
+  1155  300007                     	org	3145735
+  1156  300007  FF                 	db	255
+  1157                           
+  1158                           ;Config register CONFIG5L @ 0x300008
+  1159                           ;	Code Protection bit
+  1160                           ;	CP0 = OFF, Block 0 (000800-001FFFh) not code-protected
+  1161                           ;	Code Protection bit
+  1162                           ;	CP1 = OFF, Block 1 (002000-003FFFh) not code-protected
+  1163                           ;	Code Protection bit
+  1164                           ;	CP2 = OFF, Block 2 (004000-005FFFh) not code-protected
+  1165                           ;	Code Protection bit
+  1166                           ;	CP3 = OFF, Block 3 (006000-007FFFh) not code-protected
+  1167  300008                     	org	3145736
+  1168  300008  0F                 	db	15
+  1169                           
+  1170                           ;Config register CONFIG5H @ 0x300009
+  1171                           ;	Boot Block Code Protection bit
+  1172                           ;	CPB = OFF, Boot block (000000-0007FFh) not code-protected
+  1173                           ;	Data EEPROM Code Protection bit
+  1174                           ;	CPD = OFF, Data EEPROM not code-protected
+  1175  300009                     	org	3145737
+  1176  300009  C0                 	db	192
+  1177                           
+  1178                           ;Config register CONFIG6L @ 0x30000A
+  1179                           ;	Write Protection bit
+  1180                           ;	WRT0 = OFF, Block 0 (000800-001FFFh) not write-protected
+  1181                           ;	Write Protection bit
+  1182                           ;	WRT1 = OFF, Block 1 (002000-003FFFh) not write-protected
+  1183                           ;	Write Protection bit
+  1184                           ;	WRT2 = OFF, Block 2 (004000-005FFFh) not write-protected
+  1185                           ;	Write Protection bit
+  1186                           ;	WRT3 = OFF, Block 3 (006000-007FFFh) not write-protected
+  1187  30000A                     	org	3145738
+  1188  30000A  0F                 	db	15
+  1189                           
+  1190                           ;Config register CONFIG6H @ 0x30000B
+  1191                           ;	Configuration Register Write Protection bit
+  1192                           ;	WRTC = OFF, Configuration registers (300000-3000FFh) not write-protected
+  1193                           ;	Boot Block Write Protection bit
+  1194                           ;	WRTB = OFF, Boot block (000000-0007FFh) not write-protected
+  1195                           ;	Data EEPROM Write Protection bit
+  1196                           ;	WRTD = OFF, Data EEPROM not write-protected
+  1197  30000B                     	org	3145739
+  1198  30000B  E0                 	db	224
+  1199                           
+  1200                           ;Config register CONFIG7L @ 0x30000C
+  1201                           ;	Table Read Protection bit
+  1202                           ;	EBTR0 = OFF, Block 0 (000800-001FFFh) not protected from table reads executed in other
+      +                           blocks
+  1203                           ;	Table Read Protection bit
+  1204                           ;	EBTR1 = OFF, Block 1 (002000-003FFFh) not protected from table reads executed in other
+      +                           blocks
+  1205                           ;	Table Read Protection bit
+  1206                           ;	EBTR2 = OFF, Block 2 (004000-005FFFh) not protected from table reads executed in other
+      +                           blocks
+  1207                           ;	Table Read Protection bit
+  1208                           ;	EBTR3 = OFF, Block 3 (006000-007FFFh) not protected from table reads executed in other
+      +                           blocks
+  1209  30000C                     	org	3145740
+  1210  30000C  0F                 	db	15
+  1211                           
+  1212                           ;Config register CONFIG7H @ 0x30000D
+  1213                           ;	Boot Block Table Read Protection bit
+  1214                           ;	EBTRB = OFF, Boot block (000000-0007FFh) not protected from table reads executed in ot
+      +                          her blocks
+  1215  30000D                     	org	3145741
+  1216  30000D  40                 	db	64
+  1217                           tosu	equ	0xFFF
+  1218                           tosh	equ	0xFFE
+  1219                           tosl	equ	0xFFD
+  1220                           stkptr	equ	0xFFC
+  1221                           pclatu	equ	0xFFB
+  1222                           pclath	equ	0xFFA
+  1223                           pcl	equ	0xFF9
+  1224                           tblptru	equ	0xFF8
+  1225                           tblptrh	equ	0xFF7
+  1226                           tblptrl	equ	0xFF6
+  1227                           tablat	equ	0xFF5
+  1228                           prodh	equ	0xFF4
+  1229                           prodl	equ	0xFF3
+  1230                           indf0	equ	0xFEF
+  1231                           postinc0	equ	0xFEE
+  1232                           postdec0	equ	0xFED
+  1233                           preinc0	equ	0xFEC
+  1234                           plusw0	equ	0xFEB
+  1235                           fsr0h	equ	0xFEA
+  1236                           fsr0l	equ	0xFE9
+  1237                           wreg	equ	0xFE8
+  1238                           indf1	equ	0xFE7
+  1239                           postinc1	equ	0xFE6
+  1240                           postdec1	equ	0xFE5
+  1241                           preinc1	equ	0xFE4
+  1242                           plusw1	equ	0xFE3
+  1243                           fsr1h	equ	0xFE2
+  1244                           fsr1l	equ	0xFE1
+  1245                           bsr	equ	0xFE0
+  1246                           indf2	equ	0xFDF
+  1247                           postinc2	equ	0xFDE
+  1248                           postdec2	equ	0xFDD
+  1249                           preinc2	equ	0xFDC
+  1250                           plusw2	equ	0xFDB
+  1251                           fsr2h	equ	0xFDA
+  1252                           fsr2l	equ	0xFD9
+  1253                           status	equ	0xFD8
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        0
+    BSS         4
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMRAM          127     33      37
+    BANK0           128      0       0
+    BANK1           256      0       0
+    BANK2           256      0       0
+    BANK3           256      0       0
+    BANK4           256      0       0
+    BANK5           256      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMRAM
+
+    _main->_MAX7219Print
+    _Max7219UpdateIntensity->_SPI_Write
+    _Max7219DisplayOn->_SPI_Write
+    _MAX7219_init->_MAX7219_Write
+    _MAX7219_Write->_SPI_Write
+    _MAX7219Print->___lldiv
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under _main in BANK5
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                 2     2      0    1502
+                                             31 COMRAM     2     2      0
+                       _MAX7219Print
+                       _MAX7219_init
+                   _Max7219DisplayOn
+             _Max7219UpdateIntensity
+                           _SPI_Init
+ ---------------------------------------------------------------------------------
+ (1) _Max7219UpdateIntensity                               1     1      0      45
+                                              1 COMRAM     1     1      0
+                          _SPI_Write
+ ---------------------------------------------------------------------------------
+ (1) _Max7219DisplayOn                                     0     0      0      15
+                          _SPI_Write
+ ---------------------------------------------------------------------------------
+ (1) _MAX7219_init                                         0     0      0     515
+                      _MAX7219_Write
+                           _SPI_Init
+ ---------------------------------------------------------------------------------
+ (1) _SPI_Init                                             0     0      0       0
+ ---------------------------------------------------------------------------------
+ (2) _MAX7219_Write                                        2     1      1     515
+                                              1 COMRAM     2     1      1
+                          _SPI_Write
+ ---------------------------------------------------------------------------------
+ (1) _MAX7219Print                                        18    12      6     927
+                                             13 COMRAM    18    12      6
+                          _SPI_Write
+                            ___lldiv
+                            ___llmod
+ ---------------------------------------------------------------------------------
+ (2) ___llmod                                              9     1      8     311
+                                              0 COMRAM     9     1      8
+ ---------------------------------------------------------------------------------
+ (2) ___lldiv                                             13     5      8     314
+                                              0 COMRAM    13     5      8
+ ---------------------------------------------------------------------------------
+ (2) _SPI_Write                                            1     1      0      15
+                                              0 COMRAM     1     1      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 2
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+   _MAX7219Print
+     _SPI_Write
+     ___lldiv
+     ___llmod
+   _MAX7219_init
+     _MAX7219_Write
+       _SPI_Write
+     _SPI_Init
+   _Max7219DisplayOn
+     _SPI_Write
+   _Max7219UpdateIntensity
+     _SPI_Write
+   _SPI_Init
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             5FF      0       0      17        0.0%
+EEDATA             100      0       0       0        0.0%
+BITBANK5           100      0       0      16        0.0%
+BANK5              100      0       0      14        0.0%
+BITBANK4           100      0       0      12        0.0%
+BANK4              100      0       0      13        0.0%
+BITBANK3           100      0       0      10        0.0%
+BANK3              100      0       0      11        0.0%
+BITBANK2           100      0       0       8        0.0%
+BANK2              100      0       0       9        0.0%
+BITBANK1           100      0       0       6        0.0%
+BANK1              100      0       0       7        0.0%
+BITBANK0            80      0       0       4        0.0%
+BANK0               80      0       0       5        0.0%
+BITCOMRAM           7F      0       0       0        0.0%
+COMRAM              7F     21      25       1       29.1%
+BITSFR               0      0       0     200        0.0%
+SFR                  0      0       0     200        0.0%
+STACK                0      0       0       2        0.0%
+NULL                 0      0       0       0        0.0%
+ABS                  0      0      25      15        0.0%
+DATA                 0      0      25       3        0.0%
+CODE                 0      0       0       0        0.0%
+
+
+Microchip Technology PIC18 Macro Assembler V2.32 build 20210201212658 
+Symbol Table                                                                                   Sat Jan 22 11:20:57 2022
+
+                              _i 0022                      _SSPSTATbits 000FC7  
+                             l22 7CDC                               l25 7CEA  
+                             l41 7F32                               l34 7CC0  
+                             l43 7FFE                               l19 7CD4  
+                             l37 7D50                               l53 7D0E  
+                             l49 7CAC                               l95 7F0C  
+                             u10 7CEA                               u11 7CE6  
+                            l102 7F1C                              l811 7C9E  
+                            l741 7CD8                              l901 7D10  
+                            l813 7CAA                              l821 7D06  
+                            l495 7DD8                              l911 7F66  
+                            l903 7F1E                              l743 7CC2  
+                            l823 7D0C                              l815 7CEE  
+                            l488 7DC8                              l913 7F9A  
+                            l905 7F34                              l745 7CCC  
+                            l809 7C9C                              l817 7CFE  
+                            l921 7DDE                              l907 7F3A  
+                            l915 7FA6                              l819 7D00  
+                            l923 7DE6                              l917 7FBC  
+                            l909 7F64                              l861 7CBE  
+                            l941 7E56                              l925 7DEA  
+                            l871 7EB4                              l863 7E7A  
+                            l935 7E16                              l927 7DF0  
+                            l919 7DDA                              l881 7EFC  
+                            l873 7EC2                              l865 7E8A  
+                            l857 7CB0                              l937 7E32  
+                            l929 7E06                              l883 7F06  
+                            l875 7ECC                              l867 7EA0  
+                            l891 7D7C                              l859 7CB2  
+                            l939 7E4A                              l877 7EEA  
+                            l869 7EA8                              l893 7D8A  
+                            l885 7D52                              l879 7EFA  
+                            l895 7DA8                              l887 7D68  
+                            l897 7DB8                              l889 7D70  
+                            l899 7DC2                              u100 7CFE  
+                            u101 7CFA                              u200 7FFE  
+                            u201 7FFA                              u130 7EA0  
+                            u210 7E72                              u131 7E9C  
+                            u211 7E6E                              u140 7EC2  
+                            u141 7EBE                              u150 7EEA  
+                            u151 7EE6                              u160 7D68  
+                            u161 7D64                              u170 7D8A  
+                            u171 7D86                              u227 7DFA  
+                            u180 7DA8                              u181 7DA4  
+                            u237 7E3C                              u190 7FBC  
+                            u191 7FB8                              wreg 000FE8  
+                           _main 7DDA                             start 0000  
+__size_of_Max7219UpdateIntensity 0024                     ___param_bank 000000  
+             MAX7219Print@Number 000E                            ?_main 0001  
+                __end_of___lldiv 7F1E                  __end_of___llmod 7DDA  
+              MAX7219_Write@reg1 0003                 __end_of_SPI_Init 7CD6  
+                          status 000FD8             __end_of_MAX7219Print 8000  
+           __end_of_MAX7219_init 7D52               __size_of_SPI_Write 0016  
+              ?_Max7219DisplayOn 0001                  __initialization 7C8E  
+                   __end_of_main 7E7A               ??_Max7219DisplayOn 0002  
+                         ??_main 0020                    __activetblptr 000000  
+         _Max7219UpdateIntensity 7CEC                 ___llmod@dividend 0001  
+                         _SSPBUF 000FC9                        ??___lldiv 0009  
+                      ??___llmod 0009               MAX7219_Write@data1 0002  
+                         isa$std 000001                __end_of_SPI_Write 7CEC  
+  Max7219UpdateIntensity@OnValue 0002            __end_of_MAX7219_Write 7CC2  
+                     __accesstop 0080          __end_of__initialization 7C96  
+                  ___rparam_used 000001                   __pcstackCOMRAM 0001  
+                      ?_SPI_Init 0001            __size_of_MAX7219Print 00E2  
+          __size_of_MAX7219_init 0042                       ??_SPI_Init 0001  
+                   _MAX7219Print 7F1E                     _MAX7219_init 7D10  
+                        _SSPCON1 000FC6                          _SSPSTAT 000FC7  
+                        __Hparam 0000                    SPI_Write@data 0001  
+                        __Lparam 0000                          ___lldiv 7E7A  
+                        ___llmod 7D52                          __pcinit 7C8E  
+        ?_Max7219UpdateIntensity 0001                          __ramtop 0600  
+                        __ptext0 7DDA                          __ptext1 7CEC  
+                        __ptext2 7C9C                          __ptext3 7D10  
+                        __ptext4 7CC2                          __ptext5 7CAE  
+                        __ptext6 7F1E                          __ptext7 7D52  
+                        __ptext8 7E7A                          __ptext9 7CD6  
+      __size_of_Max7219DisplayOn 0012             end_of_initialization 7C96  
+                ___lldiv@divisor 0005                  ___lldiv@counter 000D  
+ __end_of_Max7219UpdateIntensity 7D10                        _PORTCbits 000F82  
+                      _TRISAbits 000F92                        _TRISCbits 000F94  
+                      _SPI_Write 7CD6                __size_of_SPI_Init 0014  
+            start_initialization 7C8E                       ?_SPI_Write 0001  
+                ___llmod@divisor 0005                  ___llmod@counter 0009  
+         __size_of_MAX7219_Write 0014                 _Max7219DisplayOn 7C9C  
+                    __pbssCOMRAM 0022                         ?___lldiv 0001  
+                       ?___llmod 0001                    MAX7219Print@i 001C  
+                    ??_SPI_Write 0001                    _MAX7219_Write 7CAE  
+                       _SPI_Init 7CC2                   ?_MAX7219_Write 0002  
+                       __Hrparam 0000                         __Lrparam 0000  
+               __size_of___lldiv 00A4                 __size_of___llmod 0088  
+                  __size_of_main 00A0         __end_of_Max7219DisplayOn 7CAE  
+                       isa$xinst 000000                    ?_MAX7219Print 000E  
+                  ?_MAX7219_init 0001                  ??_MAX7219_Write 0003  
+               ___lldiv@dividend 0001         ??_Max7219UpdateIntensity 0002  
+     MAX7219Print@NumberOfDigits 0012                   ??_MAX7219Print 0014  
+                 ??_MAX7219_init 0004                 ___lldiv@quotient 0009  
